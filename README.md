@@ -1,70 +1,129 @@
-# Getting Started with Create React App
+# Cash Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive web-based cash management application built with React, TypeScript, and Tailwind CSS. Features role-based access control, inventory tracking, financial transaction management, and comprehensive reporting.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### Authentication & Authorization
+- Email/password authentication
+- Three user roles: Admin, Manager, Staff
+- Role-based permissions for all modules
+- Protected routes based on user permissions
 
-### `npm start`
+### Dashboard
+- Real-time business statistics (Total Cash, Purchase, Expense, Profit)
+- 7-day transaction overview chart
+- Low stock alerts
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Transaction Management
+- **Cash Entry**: Record sales transactions with automatic stock deduction
+- **Purchase Entry**: Track purchases with automatic stock updates
+- **Expense Entry**: Manage business expenses by category
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Inventory
+- Real-time stock tracking
+- Low stock alerts
+- Stock value calculations
+- Automatic updates from sales and purchases
 
-### `npm test`
+### Reporting
+- Generate reports: Sales, Purchase, Profit & Loss, Expenses
+- Export to CSV format
+- Filter by date range (Daily, Weekly, Monthly, Yearly, Custom)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Administration
+- **User Management**: Create, edit, and manage users
+- **Permissions**: Configure role-based access control
+- Granular permissions (View, Add, Edit, Delete) per module
 
-### `npm run build`
+### UI/UX Features
+- Fully responsive design (Mobile, Tablet, Desktop)
+- Dark mode support
+- Clean, modern interface
+- Smooth transitions and animations
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Demo Credentials
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+All demo accounts use the password: `password123`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Admin**: admin@cashmanagement.com
+  - Full access to all features
 
-### `npm run eject`
+- **Manager**: manager@cashmanagement.com
+  - Access to all modules except Permissions and User Management
+  - Cannot delete entries
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Staff**: staff@cashmanagement.com
+  - Limited to viewing and adding transactions
+  - No access to administrative features
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **Frontend**: React 18, TypeScript
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **Build Tool**: Vite
+- **Data Storage**: LocalStorage (for demo purposes)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Getting Started
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The application will be available at `http://localhost:5173`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Project Structure
 
-### Code Splitting
+```
+src/
+├── components/          # Reusable components (Layout)
+├── contexts/           # React contexts (Auth, Theme)
+├── pages/              # Application pages
+│   ├── Login.tsx
+│   ├── Dashboard.tsx
+│   ├── CashEntry.tsx
+│   ├── PurchaseEntry.tsx
+│   ├── ExpenseEntry.tsx
+│   ├── StockManagement.tsx
+│   ├── Entries.tsx
+│   ├── Reports.tsx
+│   ├── Permissions.tsx
+│   └── UserManagement.tsx
+├── services/           # API and storage services
+│   ├── api.ts
+│   └── storage.ts
+├── types/              # TypeScript type definitions
+└── App.tsx             # Main application component
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Features by Role
 
-### Analyzing the Bundle Size
+### Admin
+- Full CRUD operations on all modules
+- User management
+- Permission configuration
+- Complete system access
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Manager
+- View and manage transactions
+- View reports
+- View stock and users
+- Limited delete permissions
 
-### Making a Progressive Web App
+### Staff
+- Add transactions (Cash, Purchase, Expense)
+- View dashboard and stock
+- View entries
+- No administrative access
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Notes
 
-### Advanced Configuration
+This is a demonstration application using LocalStorage for data persistence. In a production environment, you would:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Replace the mock API with a real backend (Node.js/Express, etc.)
+2. Use a proper database (PostgreSQL, MongoDB)
+3. Implement secure authentication with JWT tokens
+4. Add server-side validation and security measures
+5. Implement proper error handling and logging
