@@ -5,7 +5,7 @@ import { Menu, ChevronDown } from 'lucide-react';
 export const Navbar: React.FC = () => {
     const navLinks = [
         { name: 'Home', path: '/' },
-        { name: 'Categories', path: '/products' },
+        { name: 'Categories', path: '/categories' },
         { name: 'Products', path: '/products' },
         { name: 'Blog', path: '/blog' },
         { name: 'Contact', path: '/contact' },

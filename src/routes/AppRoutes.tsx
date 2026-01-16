@@ -13,12 +13,14 @@ import { Blog } from '../pages/Blog';
 import { AboutUs } from '../pages/AboutUs';
 import { TrackOrder } from '../pages/TrackOrder';
 import { LegalPage } from '../pages/LegalPage';
+import { Categories } from '../pages/Categories';
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/products" element={<Products />} />
       <Route path="/product/:id" element={<ProductDetails />} />
+      <Route path="/categories" element={<Categories />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/order-success" element={<OrderComplete />} />

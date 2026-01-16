@@ -17,25 +17,27 @@ const FilterContext = createContext<FilterContextType | undefined>(undefined);
 export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Categories');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
+  // const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
+  // Increase the max range to accommodate your actual product prices
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
 
   // The core filtering logic
   const filteredProducts = useMemo(() => {
     return allProducts.filter(product => {
-      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch = product.productName.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === 'All Categories' || product.category === selectedCategory;
       const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-      
+
       return matchesSearch && matchesCategory && matchesPrice;
     });
   }, [searchQuery, selectedCategory, priceRange]);
 
   return (
-    <FilterContext.Provider value={{ 
-      searchQuery, setSearchQuery, 
+    <FilterContext.Provider value={{
+      searchQuery, setSearchQuery,
       selectedCategory, setSelectedCategory,
       priceRange, setPriceRange,
-      filteredProducts 
+      filteredProducts
     }}>
       {children}
     </FilterContext.Provider>

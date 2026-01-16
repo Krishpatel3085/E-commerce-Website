@@ -31,14 +31,14 @@ export const ProductFilters: React.FC = () => {
         <input 
           type="range" 
           min="0" 
-          max="1000" 
+          max="100000" 
           value={priceRange[1]}
           onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
           className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#0d6efd]"
         />
         <div className="flex justify-between text-xs mt-2 text-gray-400 font-bold">
           <span>$0</span>
-          <span>$1000</span>
+          <span>$100000</span>
         </div>
       </section>
     </div>
