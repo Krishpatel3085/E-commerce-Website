@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { 
   ShoppingCart, 
-  User, 
-  Heart, 
+  User,  
   Phone, 
   MapPin, 
   Menu, 
@@ -12,17 +11,17 @@ import {
   UserPlus 
 } from 'lucide-react';
 import { useCart } from '../../contexts/CartContext';
-import { useWishlist } from '../../contexts/WishlistContext';
+// import { useWishlist } from '../../contexts/WishlistContext';
 import { SearchBar } from './SearchBar';
 import { Navbar } from './Navbar';
 
 export const Header: React.FC = () => {
   const { cart } = useCart();
-  const { wishlist } = useWishlist();
+  // const { wishlist } = useWishlist();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const wishlistCount = wishlist.length;
+  // const wishlistCount = wishlist.length;
 
   return (
     <header className="w-full bg-white shadow-sm relative z-[100]">
@@ -79,7 +78,7 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Wishlist */}
-          <Link to="/wishlist" className="flex flex-col items-center relative group">
+          {/* <Link to="/wishlist" className="flex flex-col items-center relative group">
             <div className="relative">
               <Heart size={24} className="text-gray-700 group-hover:text-red-500 transition-colors" />
               {wishlistCount > 0 && (
@@ -89,7 +88,7 @@ export const Header: React.FC = () => {
               )}
             </div>
             <span className="hidden sm:block text-[10px] font-bold mt-1 text-gray-500 group-hover:text-red-500 uppercase">Wishlist</span>
-          </Link>
+          </Link> */}
 
           {/* Cart */}
           <Link to="/cart" className="flex flex-col items-center relative group">

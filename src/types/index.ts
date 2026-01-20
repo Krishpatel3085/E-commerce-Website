@@ -14,7 +14,7 @@ export interface Product {
   colors: string[];
   sizes: string[];
   stock: number;
-variants: Variant[];
+  variants: Variant[];
   selectedVariant?: Variant;
   selectedSize?: string;
 }
@@ -27,11 +27,25 @@ export interface Variant {
     url: string;
   };
   size: Array<{
+    size: string;
     name: string;
     stock: number;
     _id: string;
   }>;
 }
 export interface CartItem extends Product {
+  color: any;
+  selectedColor: any;
   quantity: number;
+  size?: string;
+}
+export interface Category {
+  _id: string;
+  id: string;
+  name: string;
+  productCount?: number;
+  image: {
+    url: string;
+  };
+  count: number;
 }

@@ -4,12 +4,15 @@ import { ProductCard } from '../components/product/ProductCard';
 import { ArrowRight, Truck, ShieldCheck, Headphones, Loader2 } from 'lucide-react';
 import { FlashDeals } from '../components/product/FlashDeals';
 import { CategorySection } from '../components/home/CategorySection';
-import { productService } from '../services/productService'; 
-import { Product } from '../types';
+import { productService } from '../services/productService';
+import { CategoriesService } from '../services/categories';
+import { Category, Product } from '../types';
 import { useNavigate } from 'react-router-dom'; // Assuming you use react-router
+
 
 export const Home: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const navigate = useNavigate();
 
@@ -18,6 +21,8 @@ export const Home: React.FC = () => {
             try {
                 setLoading(true);
                 const data = await productService.getAllProducts();
+                const catData = await CategoriesService.getAllCategories();
+                setCategories(catData);
                 setProducts(data);
             } catch (err) {
                 console.error("Error loading home data:", err);
@@ -29,7 +34,7 @@ export const Home: React.FC = () => {
     }, []);
 
     // Extract unique categories dynamically from products
-    const dynamicCategories = Array.from(new Set(products.map(p => p.category)));
+    // const dynamicCategories = Array.from(new Set(products.map(p => p.category)));
 
     // Get only top 4 or 8 products for the "Featured" section
     const featuredProducts = products.slice(0, 8);
@@ -66,10 +71,14 @@ export const Home: React.FC = () => {
             </section>
 
             {/* Flash Deals with Dynamic Products */}
-            <FlashDeals products={products.filter(p => p.originalPrice && p.originalPrice > p.price)} />
-            
+            <FlashDeals
+                products={products.filter(p =>
+                    p.originalPrice && p.price && p.originalPrice > p.price
+                )}
+            />
+
             {/* Dynamic Category Section */}
-            <CategorySection categories={dynamicCategories} />
+            <CategorySection categories={categories} />
 
             {/* Featured Products */}
             <section className="container mx-auto px-4">
@@ -78,7 +87,7 @@ export const Home: React.FC = () => {
                         <h2 className="text-3xl font-bold text-gray-900">Featured Products</h2>
                         <div className="h-1 w-20 bg-[#0d6efd] mt-2"></div>
                     </div>
-                    <button 
+                    <button
                         onClick={() => navigate('/products')}
                         className="flex items-center gap-2 text-[#0d6efd] font-bold hover:underline"
                     >

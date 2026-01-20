@@ -60,20 +60,12 @@ export const Cart: React.FC = () => {
 
               <div className="px-4 sm:px-8 divide-y divide-gray-100">
                 {cart.map((item) => (
-                  <CartItem key={item.id} item={item} />
+                  <CartItem key={item._id} _id={item._id} item={item} />
                 ))}
               </div>
 
               {/* Cart Actions */}
-              <div className="px-8 py-6 bg-gray-50/50 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div className="flex gap-4">
-                  <input 
-                    type="text" 
-                    placeholder="Coupon Code" 
-                    className="px-4 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-[#0d6efd] bg-white"
-                  />
-                  <Button variant="outline" className="py-2 px-6 text-sm">Apply</Button>
-                </div>
+              <div className="px-8 py-6 bg-gray-50/50 flex flex-col sm:flex-row justify-end items-center gap-4">
                 <button 
                   onClick={clearCart}
                   className="flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-red-500 transition-colors"
@@ -109,7 +101,7 @@ export const Cart: React.FC = () => {
 
           {/* Sidebar Summary */}
           <div className="lg:col-span-4 h-full">
-            <CartSummary subtotal={subtotal} />
+            <CartSummary subtotal={subtotal || 0} cartItems={cart} />
           </div>
         </div>
       </div>

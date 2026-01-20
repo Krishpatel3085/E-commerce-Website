@@ -12,6 +12,7 @@ import { Footer } from './components/common/Footer';
 // Routes
 import { AppRoutes } from './routes/AppRoutes';
 import { FilterProvider } from './contexts/FilterContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 /**
  * App Component
@@ -24,6 +25,7 @@ import { FilterProvider } from './contexts/FilterContext';
  */
 const App: React.FC = () => {
   return (
+    <AuthProvider>
     <WishlistProvider>
       <CartProvider>
         <FilterProvider>
@@ -48,6 +50,7 @@ const App: React.FC = () => {
 
       </CartProvider>
     </WishlistProvider>
+    </AuthProvider>
   );
 };
 
