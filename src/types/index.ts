@@ -34,6 +34,7 @@ export interface Variant {
   }>;
 }
 export interface CartItem extends Product {
+  Coupon: any;
   color: any;
   selectedColor: any;
   quantity: number;

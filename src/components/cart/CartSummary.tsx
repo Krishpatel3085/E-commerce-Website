@@ -122,7 +122,7 @@ const removeAllCoupons = async () => {
 
         <div className="flex justify-between text-gray-600">
           <span>GST / Tax (18%)</span>
-          <span className="font-bold text-gray-900">₹{taxAmount.toFixed(2)}</span>
+          <span className="font-bold text-gray-900">+ ₹{taxAmount.toFixed(2)}</span>
         </div>
       </div>
 

@@ -88,13 +88,13 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           <div>
             {/* SHOW DISCOUNTED PRICE */}
             <span className="text-lg font-bold text-gray-900">
-              ${currentPrice || originalPrice}
+              ₹{currentPrice || originalPrice}
             </span>
 
             {/* SHOW ORIGINAL CROSSED-OUT PRICE */}
             {hasDiscount && (
               <span className="ml-2 text-sm text-gray-400 line-through">
-                ${originalPrice}
+                ₹{originalPrice}
               </span>
             )}
           </div>

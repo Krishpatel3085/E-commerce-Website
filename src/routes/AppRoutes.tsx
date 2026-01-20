@@ -23,7 +23,7 @@ export const AppRoutes: React.FC = () => {
       <Route path="/categories" element={<Categories />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/order-success" element={<OrderComplete />} />
+      <Route path="/order-success/:orderId" element={<OrderComplete />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
