@@ -54,7 +54,7 @@ export const Header: React.FC = () => {
 
         {/* Logo */}
         <Link to="/" className="text-2xl font-black tracking-tighter text-gray-900 shrink-0">
-          NEXUS<span className="text-[#0d6efd]">STORE</span>
+          Nilesh<span className="text-[#0d6efd]">STORE</span>
         </Link>
 
         {/* Search Bar - Hidden on mobile, flexible on Desktop */}
@@ -66,7 +66,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-3 sm:gap-6">
           {/* Account - Desktop Dropdown Style Link */}
           <div className="hidden md:block relative group">
-            <Link to="/login" className="flex flex-col items-center group">
+            <Link to="/account" className="flex flex-col items-center group">
               <User size={24} className="text-gray-700 group-hover:text-[#0d6efd] transition-colors" />
               <span className="text-[10px] font-bold mt-1 text-gray-500 uppercase">Account</span>
             </Link>
@@ -74,6 +74,7 @@ export const Header: React.FC = () => {
             <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
               <Link to="/login" className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-50"><LogOut size={16}/> Sign In</Link>
               <Link to="/register" className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-50"><UserPlus size={16}/> Register</Link>
+              <Link to="/account" className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-50"><UserPlus size={16}/> account</Link>
             </div>
           </div>
 

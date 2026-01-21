@@ -14,6 +14,7 @@ import { AboutUs } from '../pages/AboutUs';
 import { TrackOrder } from '../pages/TrackOrder';
 import { LegalPage } from '../pages/LegalPage';
 import { Categories } from '../pages/Categories';
+import { AccountPage } from '../pages/AccountPage';
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -25,6 +26,7 @@ export const AppRoutes: React.FC = () => {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/order-success/:orderId" element={<OrderComplete />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/account" element={<AccountPage/>} />
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/blog" element={<Blog />} />
