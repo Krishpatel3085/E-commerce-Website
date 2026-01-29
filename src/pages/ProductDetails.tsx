@@ -6,7 +6,9 @@ import { useCart } from '../contexts/CartContext';
 import { ProductGallery } from '../components/product/ProductGallery';
 import { RatingStars } from '../components/common/RatingStars';
 import { Button } from '../components/ui/Button';
-import { useAuth } from '../contexts/AuthContext'; // <--- Add this
+import { useAuth } from '../contexts/AuthContext';
+import { reviewService, Review } from '../services/reviewService';
+import { Star, User, } from 'lucide-react';
 import {
   Truck,
   RefreshCw,
@@ -78,6 +80,25 @@ export const ProductDetails: React.FC = () => {
     }
   };
 
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  // Fetch Reviews on Load
+  useEffect(() => {
+    if (id) {
+      fetchReviews(id);
+    }
+  }, [id]);
+
+  const fetchReviews = async (productId: string) => {
+    try {
+      const data = await reviewService.getReviewsByProduct(productId);
+      setReviews(data);
+    } catch (error) {
+      console.error("Error fetching reviews", error);
+    }
+  };
+
+
   const handleAddToCart = async () => {
     // 1. CHECK LOGIN STATUS FIRST
     if (!isAuthenticated) {
@@ -124,6 +145,12 @@ export const ProductDetails: React.FC = () => {
       setSelectedSize(newVariant.size[0].size);
     }
   };
+
+  const averageRating = useMemo(() => {
+    if (reviews.length === 0) return 0;
+    const total = reviews.reduce((acc, rev) => acc + rev.rating, 0);
+    return Number((total / reviews.length).toFixed(1)); // Result like "4.3"
+  }, [reviews]);
 
   const copyToClipboard = (code: string) => {
     navigator.clipboard.writeText(code);
@@ -224,31 +251,33 @@ export const ProductDetails: React.FC = () => {
               <div className="mb-6 border-b pb-6">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-[#0d6efd] font-bold text-xs uppercase tracking-widest mb-1">
-                      {product.category}
-                    </p>
-                    <h1 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">
-                      {product.productName}
-                    </h1>
-                  </div>
-                  <div className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${product.isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
-                    {product.isActive ? 'In Stock' : 'Out of Stock'}
+                    <div className='flex items-center justify-between'>
+                      <p className="text-[#0d6efd] font-bold text-xs uppercase tracking-widest mb-1">
+                        {product.category}
+                      </p>
+                      <div className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${product.isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
+                        {product.isActive ? 'In Stock' : 'Out of Stock'}
+                      </div>
+                    </div>
+                    <h6 className="text-xl md:text-2xl  font-medium mb-3">
+                      {product.description}
+                    </h6>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <RatingStars rating={product.rating} reviews={product.reviews} />
-                  <span className="text-gray-400 text-sm">|</span>
-                  <span className="text-sm text-gray-500 font-medium">{product.reviews} Reviews</span>
+                <div className="flex items-center gap-4 ">
+                  <RatingStars rating={averageRating} reviews={reviews.length} />
+                  <span className="text-gray-400 text-md">|</span>
+                  <span className="text-sm text-gray-500 font-medium">{reviews.length} Reviews</span>
                 </div>
               </div>
 
               <div className="mb-8">
                 <div className="flex flex-wrap items-center gap-4">
                   <div className="flex items-center gap-3">
-                    <span className="text-4xl font-black text-[#0d6efd]">${product.discountPrice || product.price}</span>
+                    <span className="text-4xl font-black text-[#0d6efd]">₹{product.discountPrice || product.price}</span>
                     {product.discountPrice && (
-                      <span className="text-xl text-gray-400 line-through">${product.price}</span>
+                      <span className="text-xl text-gray-400 line-through">₹{product.price}</span>
                     )}
                   </div>
 
@@ -264,10 +293,6 @@ export const ProductDetails: React.FC = () => {
                     </div>
                   </button>
                 </div>
-
-                <p className="mt-4 text-gray-600 leading-relaxed text-sm md:text-base">
-                  {product.description}
-                </p>
               </div>
 
               {/* ... The rest of your component (Color, Size, Add to Cart) remains the same ... */}
@@ -379,6 +404,103 @@ export const ProductDetails: React.FC = () => {
           </div>
         </div>
       </div>
+
+    {/* --- REVIEWS SECTION --- */}
+<div className="mt-12 bg-white rounded-3xl shadow-sm p-6 md:p-10">
+  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 pb-6 border-b border-gray-100">
+    <div className="flex items-center gap-6">
+      <div className="flex flex-col items-center justify-center bg-blue-50 px-6 py-4 rounded-3xl border border-blue-100">
+        <span className="text-4xl font-black text-[#0d6efd]">{averageRating}/5</span>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-black text-gray-900">Customer Feedback</h2>
+        <div className="flex items-center gap-2 mt-1">
+          <div className="flex text-yellow-400">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                size={16}
+                fill={i < Math.round(Number(averageRating)) ? "currentColor" : "none"}
+                className={i < Math.round(Number(averageRating)) ? "text-yellow-400" : "text-gray-300"}
+              />
+            ))}
+          </div>
+          <p className="text-gray-500 text-sm font-bold ml-1">
+            Based on {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {reviews.length === 0 ? (
+    <div className="text-center py-16">
+      <div className="bg-gray-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-300">
+        <Star size={48} />
+      </div>
+      <h3 className="text-xl font-bold text-gray-900">No reviews yet</h3>
+      <p className="text-gray-400 mt-2">Be the first to share your experience!</p>
+    </div>
+  ) : (
+    /* Notice: No comments allowed here without braces */
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+      {reviews.map((rev) => (
+        <div 
+          key={rev._id} 
+          className="flex flex-col p-6 border border-gray-100 rounded-[2rem] bg-gray-50/40 hover:bg-white hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300 group h-full"
+        >
+          <div className="flex justify-between items-start mb-5 flex-shrink-0">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white border border-gray-100 text-[#0d6efd] rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
+                <User size={24} />
+              </div>
+              <div className="min-w-0">
+                <p className="font-black text-gray-900 truncate">{rev.userName}</p>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter whitespace-nowrap">
+                    {new Date(rev.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </span>
+                  <span className="flex items-center gap-0.5 text-[9px] font-black text-green-600 bg-green-50 px-1.5 py-0.5 rounded uppercase whitespace-nowrap">
+                    <Check size={10} strokeWidth={3} /> Verified
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-0.5 text-yellow-400 flex-shrink-0">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={14} fill={i < rev.rating ? "currentColor" : "none"} strokeWidth={2} />
+              ))}
+            </div>
+          </div>
+
+          <div className="flex-1">
+            <h4 className="font-bold text-gray-900 text-lg mb-2 leading-tight">
+              {rev.title || "NA"}
+            </h4>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              "{rev.comment}"
+            </p>
+          </div>
+
+          {rev.images && rev.images.length > 0 && (
+            <div className="mt-6 w-full"> 
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl border-2 border-white bg-gray-100 shadow-sm group-hover:shadow-md transition-shadow">
+                <img
+                  src={rev.images[0].url}
+                  alt="User review"
+                  className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )} {/* This closing brace was missing or misplaced */}
+</div>
+
     </div>
   );
 };

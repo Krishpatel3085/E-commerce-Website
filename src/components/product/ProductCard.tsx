@@ -25,8 +25,7 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     if (!product || isAdding) return;
 
     try {
-      // FIX: Provide a fallback structure so the Context doesn't break
-      // We pass the first variant as the "default" if the user hasn't picked one
+      
       const defaultVariant = product.variants?.[0];
       const defaultSize = defaultVariant?.size?.[0]?.size || "";
 
@@ -54,6 +53,7 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const currentPrice = product.discountPrice;
   const hasDiscount = currentPrice && currentPrice < originalPrice;
 
+  
   return (
     <div className="group bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-4">
       <Link to={`/product/${product._id || product.id}`} className="block relative overflow-hidden rounded-lg">

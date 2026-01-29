@@ -7,8 +7,8 @@ export const RatingStars: React.FC<{ rating: number; reviews?: number }> = ({ ra
             {[...Array(5)].map((_, i) => (
                 <Star
                     key={i}
-                    size={16}
-                    className={i < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-200"}
+                    size={24}
+                    className={i < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-400"}
                 />
             ))}
             {reviews !== undefined && <span className="text-xs text-gray-400 ml-1">({reviews})</span>}
