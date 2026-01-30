@@ -54,7 +54,8 @@ export const Header: React.FC = () => {
 
         {/* Logo */}
         <Link to="/" className="text-2xl font-black tracking-tighter text-gray-900 shrink-0">
-          Nilesh<span className="text-[#0d6efd]">STORE</span>
+        <img src="/favicon-32x32.png" alt="Logo" className="w-8 h-8 mr-2 inline-block" />
+          AURA<span className="text-[#0d6efd]">STORE</span>
         </Link>
 
         {/* Search Bar - Hidden on mobile, flexible on Desktop */}
